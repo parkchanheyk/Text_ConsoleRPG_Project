@@ -11,6 +11,12 @@ enum class EItemType
 class ItemBase
 {
 public:
+	ItemBase() {}
+
+	ItemBase(EItemType type, std::string name, size_t maxCount, size_t sell, size_t buy)
+		: itemType(type), itemName(name), maxStackCount(maxCount), sellCost(sell), buyCost(buy) {
+	}
+
 	// 아이템 타입
 	EItemType itemType;
 

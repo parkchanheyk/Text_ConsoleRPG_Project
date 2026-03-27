@@ -3,6 +3,10 @@
 #include <vector>
 #include <memory>
 #include "Player.h" // 앞서 만든 플레이어 클래스
+#include "ItemBase.h"
+#include "Shop.h"
+#include "ShopUI.h"
+#include "Money.h"
 
 // 게임의 현재 상태를 관리하는 열거형
 enum class EGameState {
@@ -16,6 +20,10 @@ enum class EGameState {
 
 // Player 클래스의 상세 구현을 헤더에서 숨기기 위한 전방 선언
 class Player;
+class ItemBase;
+class Shop;
+class ShopUI;
+class Money;
 
 class LifeCycle {
 private:
@@ -33,6 +41,9 @@ private:
 
     // 3. 게임 데이터 자원
     std::unique_ptr<Player> mainPlayer; // 스마트 포인터를 이용한 플레이어 관리
+    std::unique_ptr<Shop> shop; // 상점 관리
+    std::unique_ptr<ShopUI> shopUI; // 상점 UI
+    std::unique_ptr<Money> money;
     std::string background;             // 던전 배경 문자열
     std::vector<std::string> catArt;    // 고양이 아스키 아트
 

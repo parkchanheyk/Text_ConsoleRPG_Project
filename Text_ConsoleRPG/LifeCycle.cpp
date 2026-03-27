@@ -22,7 +22,27 @@ const vector<string> catFrame2 = {
 LifeCycle::LifeCycle() : currentState(EGameState::Village), isRunning(true), distance(0)
 {
     mainPlayer = std::make_unique<Player>("나비", "고양이 기사");
+    shop = std::make_unique<Shop>();
+    money = std::make_unique<Money>(1000);
+    shopUI = std::make_unique<ShopUI>();
 
+    auto potion = std::make_shared<ItemBase>(
+        EItemType::Consume,
+        "포션",
+        99,
+        25,
+        50
+    );
+    auto sword = std::make_shared<ItemBase>(
+        EItemType::Equip,
+        "검",
+        1,
+        25,
+        50
+    );
+
+    shop->addStock(potion, 10);
+    shop->addStock(sword, 1);
     // 배경 패턴 초기화 (멤버 변수 사용)
     background = ".... ^ .... _ .... * .... ^ .... _ .... * .... ^ .... _ .... * .... ^ ....";
 
@@ -118,18 +138,19 @@ void LifeCycle::HandleVillage() { // 마을 메뉴와 고양이 애니메이션을 함께 출력합
     }
 }
 
-void LifeCycle::HandleShop() { // 플레이어의 money 정보를 받아서 상점에서 아이템 구매 기능을 구현할 예정입니다.
+void LifeCycle::HandleShop()
+{
     Gotoxy(0, 0);
-    cout << "==========================================" << endl;
-    cout << "                  [ 상점 ]            " << endl;
-    cout << "==========================================" << endl;
-    cout << "  (아이템 목록 준비 중...)" << endl << endl;
-    cout << "  [ESC] 마을로 돌아가기" << endl;
-    cout << "==========================================" << endl;
 
-    if (_kbhit() && _getch() == KEY_ESC) {
+    // ShopUI 결과 받기
+    bool stay = ShopUI::updateShopTick(*shop, *money);
+
+    // false면 마을로 복귀
+    if (!stay)
+    {
         system("cls");
         currentState = EGameState::Village;
+        return;
     }
 }
 
