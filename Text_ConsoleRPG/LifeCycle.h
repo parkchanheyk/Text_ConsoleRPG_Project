@@ -7,6 +7,14 @@
 #include "Shop.h"
 #include "ShopUI.h"
 #include "Money.h"
+#include "Inventory.h"
+
+// 입력 키코드 매크로 지정
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
+#define KEY_ESC 27
 
 // 게임의 현재 상태를 관리하는 열거형
 enum class EGameState {
@@ -33,14 +41,15 @@ private:
     int distance; // 던전 이동 거리
 
     // 2. 키 코드 상수 (상태 핸들러에서 공용으로 사용)
-    static const int KEY_UP = 72;
-    static const int KEY_DOWN = 80;
-    static const int KEY_LEFT = 75;
-    static const int KEY_RIGHT = 77;
-    static const int KEY_ESC = 27;
+    //static const int KEY_UP = 72;
+    //static const int KEY_DOWN = 80;
+    //static const int KEY_LEFT = 75;
+    //static const int KEY_RIGHT = 77;
+    //static const int KEY_ESC = 27;
 
     // 3. 게임 데이터 자원
     std::unique_ptr<Player> mainPlayer; // 스마트 포인터를 이용한 플레이어 관리
+    std::shared_ptr<Inventory> testInventory;   // UI 테스트 전용 인벤토리 객체
     std::unique_ptr<Shop> shop; // 상점 관리
     std::unique_ptr<ShopUI> shopUI; // 상점 UI
     std::unique_ptr<Money> money;

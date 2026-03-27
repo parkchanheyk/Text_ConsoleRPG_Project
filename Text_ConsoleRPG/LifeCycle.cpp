@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <string>
+#include "ConsumeItem.h"    // ConsumeItem, HPPotionItem
 
 using namespace std;
 
@@ -26,6 +27,8 @@ LifeCycle::LifeCycle() : currentState(EGameState::Village), isRunning(true), dis
     money = std::make_unique<Money>(1000);
     shopUI = std::make_unique<ShopUI>();
 
+    testInventory = std::make_shared<Inventory>(5);
+
     auto potion = std::make_shared<ItemBase>(
         EItemType::Consume,
         "포션",
@@ -40,6 +43,10 @@ LifeCycle::LifeCycle() : currentState(EGameState::Village), isRunning(true), dis
         25,
         50
     );
+
+    testInventory->AddItem(potion, 99);
+    testInventory->AddItem(sword, 1);
+
 
     shop->addStock(potion, 10);
     shop->addStock(sword, 1);
@@ -156,12 +163,16 @@ void LifeCycle::HandleShop()
 
 void LifeCycle::HandleInventory() { // 플레이어의 인벤토리 정보를 받아서 아이템 목록을 보여주는 기능을 구현할 예정입니다.
     Gotoxy(0, 0);
-    cout << "==========================================" << endl;
-    cout << "                [ 인벤토리 ]               " << endl;
-    cout << "==========================================" << endl;
-    cout << "  (아이템 목록 준비 중...)" << endl << endl;
-    cout << "  [ESC] 마을로 돌아가기" << endl;
-    cout << "==========================================" << endl;
+    //cout << "==========================================" << endl;
+    //cout << "                [ 인벤토리 ]               " << endl;
+    //cout << "==========================================" << endl;
+    //cout << "  (아이템 목록 준비 중...)" << endl << endl;
+    //cout << "  [ESC] 마을로 돌아가기" << endl;
+    //cout << "==========================================" << endl;
+    if (testInventory != nullptr)
+    {
+        testInventory->PrintInventory();
+    }
 
     if (_kbhit() && _getch() == KEY_ESC) {
         system("cls");

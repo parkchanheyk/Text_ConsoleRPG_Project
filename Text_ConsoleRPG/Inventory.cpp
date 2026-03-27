@@ -1,6 +1,19 @@
 #include "Inventory.h"
+#include <Windows.h>	// COORD, SetConsoleCursorPosition
 #include <iostream>	// std::cout, std::endl
 #include <iomanip>	// std::setw, std::setfill
+
+/// <summary>
+/// 텍스트 입력 커서를 특정 좌표로 이동
+/// <para>Console 화면 좌측 상단 == (0, 0)</para>
+/// </summary>
+/// <param name="x">수평 좌표</param>
+/// <param name="y">수직 좌표</param>
+void SetTextCursorLocation(uint32_t x, uint32_t y)
+{
+	COORD pos = { (SHORT)x, (SHORT)y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
 
 // 생성자 (인벤토리 사이즈 제한 설정)
 Inventory::Inventory(size_t inventoryCapacity) : capacity(inventoryCapacity)
@@ -124,12 +137,55 @@ size_t Inventory::GetSize() const
 // 인벤토리에 보유중인 아이템 목록 출력
 void Inventory::PrintInventory() const
 {
-	std::cout << "----------- Inventory -----------" << std::endl;
-	std::cout << "#LogTemp - Inventory : Current State  = size(" << GetSize() << ") / capacity(" << capacity << ")" << std::endl;
-	size_t index = 1;
+	// UI 좌우 크기 조절을 위한 최대 길이 저장 변수
+	size_t maxLength = 12;	// 메뉴 이름의 길이를 최소값으로 설정
+
+	// 아이템 순서
+	size_t index = 2;
 	for (const auto& pair : container)
 	{
-		std::cout << "\t(" << std::setw(2) << std::setfill('0') << index++ << ")" << pair.first->itemName << "  x " << pair.second << std::endl;
+		// 커서 위치 이동 (앞쪽 공백 6칸 고정)
+		SetTextCursorLocation(6, index++);
+
+		// 출력할 문자열 설정
+		std::string line;
+		line.append(pair.first->itemName);	// 아이템 이름
+		line.append(" x ");		// 개수 표시를 위한 인디케이터
+		line.append(std::to_string(pair.second));	// 보유 개수
+
+		// 문자열 출력
+		std::cout << line << std::endl;
+
+		// 문자열 길이 비교
+		maxLength = (maxLength < (line.size() + 6)) ? line.size() + 6 : maxLength;
 	}
-	std::cout << "------------------------------" << std::endl;
+
+	// 수평 테두리 문자열 설정
+	std::string horizontalBorder = "+";
+	horizontalBorder.append(maxLength, '-');
+	horizontalBorder.append("+");
+
+	// 상단 테두리 출력
+	SetTextCursorLocation(0, 1);
+	std::cout << horizontalBorder;
+
+	// 좌우 테두리 출력
+	for (int i = 2; i < index; ++i)
+	{
+		// 좌측 테두리 출력
+		SetTextCursorLocation(0, i);
+		std::cout << '|';
+
+		// 우측 테두리 출력
+		SetTextCursorLocation(maxLength + 1, i);
+		std::cout << '|';
+	}
+
+	// 하단 테두리 출력
+	SetTextCursorLocation(0, index);
+	std::cout << horizontalBorder;
+
+	// 상단에 주 메뉴 이름 출력
+	SetTextCursorLocation((maxLength / 2) - 5, 0);
+	std::cout << "* Inventory *";
 }
