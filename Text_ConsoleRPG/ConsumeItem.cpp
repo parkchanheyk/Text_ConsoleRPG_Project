@@ -76,7 +76,7 @@ bool AtkBuffItem::ApplyEffect(const std::shared_ptr<Character> character)
 			std::cout << "#LogTemp - ConsumeItem : Increase Atk of " << character->getName() << " as " << buffAtk << std::endl;
 
 			// 증가된 공격력 적용
-			character->setAttack(newAtk);
+			character->setATK(newAtk);
 
 			return true;
 		}
@@ -104,7 +104,7 @@ bool AtkBuffItem::RevertEffect(const std::shared_ptr<Character> character)
 			std::cout << "#LogTemp - ConsumeItem : Decrease Atk of " << character->getName() << " as " << buffAtk << std::endl;
 
 			// 감소된 공격력 적용
-			character->setAttack(newAtk);
+			character->setATK(newAtk);
 
 			return true;
 		}
