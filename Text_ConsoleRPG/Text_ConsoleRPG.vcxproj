@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BossMonster.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="ConsumeItem.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -130,15 +131,18 @@
     <ClCompile Include="LifeCycle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Money.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BossMonster.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="ConsumeItem.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="ItemBase.h" />
     <ClInclude Include="LifeCycle.h" />
     <ClInclude Include="Money.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
