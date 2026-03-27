@@ -97,3 +97,24 @@ public:
 	// 캐릭터의 공격력 감소
 	virtual bool RevertEffect(const std::shared_ptr<Character> character) override;
 };
+
+class HPBuffItem : public ConsumeItem, public IReversiblePattern
+{
+	HPBuffItem(std::string itemName, size_t buffHP, size_t minLevel) : ConsumeItem()
+	{
+		this->itemName = itemName;
+		this->buffHP = buffHP;
+		this->minLevel = minLevel;
+	}
+
+	// 공격력 증가량
+	size_t buffHP;
+
+	// 최소 요구 레벨
+	size_t minLevel;
+
+	// 캐릭터의 최대 HP 증가
+	virtual bool ApplyEffect(const std::shared_ptr<Character> character) override;
+	// 캐릭터의 최대 HP 감소
+	virtual bool RevertEffect(const std::shared_ptr<Character> character) override;
+};

@@ -113,3 +113,59 @@ bool AtkBuffItem::RevertEffect(const std::shared_ptr<Character> character)
 	std::cout << "#LogTemp - ConsumeItem : Failed to Revert Item(" << itemName << ")" << std::endl;
 	return false;
 }
+
+bool HPBuffItem::ApplyEffect(const std::shared_ptr<Character> character)
+{
+	// 포인터(매개변수) nullptr 값 방어 코드
+	if (character != nullptr)
+	{
+		// 캐릭터 레벨이 사용 조건을 만족하는지 확인
+		if (character->getLevel() >= minLevel)
+		{
+			// 로그 출력
+			std::cout << "#LogTemp - ConsumeItem : Success to Apply Item(" << itemName << ") to " << character->getName() << std::endl;
+
+			// 증가된 최대 HP 계산
+			size_t newMaxHP = character->getMaxHP() + buffHP;
+
+			// 로그 출력
+			std::cout << "#LogTemp - ConsumeItem : Increase MaxHP of " << character->getName() << " as " << buffHP << std::endl;
+
+			// 증가된 최대 HP 적용
+			character->setMaxHP(newMaxHP);
+
+			return true;
+		}
+	}
+
+	std::cout << "#LogTemp - ConsumeItem : Failed to Apply Item(" << itemName << ")" << std::endl;
+	return false;
+}
+
+bool HPBuffItem::RevertEffect(const std::shared_ptr<Character> character)
+{
+	// 포인터(매개변수) nullptr 값 방어 코드
+	if (character != nullptr)
+	{
+		// 캐릭터 레벨이 사용 조건을 만족하는지 확인
+		if (character->getLevel() >= minLevel)
+		{
+			// 로그 출력
+			std::cout << "#LogTemp - ConsumeItem : Success to Revert Item(" << itemName << ") from " << character->getName() << std::endl;
+
+			// 감소된 최대 HP 계산
+			size_t newMaxHP = character->getMaxHP() - buffHP;
+
+			// 로그 출력
+			std::cout << "#LogTemp - ConsumeItem : Decrease MaxHP of " << character->getName() << " as " << buffHP << std::endl;
+
+			// 감소된 최대 HP 적용
+			character->setMaxHP(newMaxHP);
+
+			return true;
+		}
+	}
+
+	std::cout << "#LogTemp - ConsumeItem : Failed to Revert Item(" << itemName << ")" << std::endl;
+	return false;
+}
