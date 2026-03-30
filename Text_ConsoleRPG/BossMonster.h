@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include <memory>	
+#include <memory>
+
 #include "Character.h"
 #include "Player.h"
 
@@ -11,18 +12,16 @@ class BossMonster :public Character
 public:
 	BossMonster();
 	// 소멸자 해야하나?
-	
+
 	void attack(std::shared_ptr<Character> enemy) override;
 
 	void takeDamage(int amount) override;
 
 	void printStatus() override;
-	
+
 	void death() override;
 
-	void attackPattern4(std::shared_ptr<Player> enemy);
-
-	void attackPattern4CheckAnswer(std::shared_ptr<Player> enemy);
+	void attackPattern4(std::shared_ptr<Character> enemy);
 
 	int determinePhase(int currentHP);
 
@@ -37,4 +36,5 @@ private:
 	bool isInvincible = false;
 	int phase = 1;
 	int correctAnswer = 0;
+	int playerAnswer = 0;
 };

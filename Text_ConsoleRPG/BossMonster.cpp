@@ -1,14 +1,16 @@
 #include <iostream>
 #include <string>
+#include <conio.h>
 
 #include "BossMonster.h"
 #include "Player.h"
+#include "Windows.h"
 
 BossMonster::BossMonster() :Character("[초대형 울트라 찍찍 들쥐]")
 {
 	// 모든 수치는 공유 후 조율할 예정
-	maxHP = 10000;
-	currentHP = 10000;
+	maxHP = 1000;
+	currentHP = maxHP;
 	level = 100;
 	ATK = 10;
 	exp = 100;
@@ -35,6 +37,8 @@ int BossMonster::determinePhase(int currentHP)
 
 void BossMonster::attack(std::shared_ptr<Character> enemy)
 {
+	srand(time(NULL));
+
 	int pattern = 0;
 
 	isInvincible = false;
@@ -52,22 +56,22 @@ void BossMonster::attack(std::shared_ptr<Character> enemy)
 		break;
 	}
 
+	std::cout << '\n';
+	Sleep(500);
+
 	switch (pattern)
 	{
 	case 1:
 		std::cout << name << "가 [꼬리 휘두르기]를 시전했습니다!\n\n";
-		enemy->setCurrentHP(enemy->getCurrentHP() - (ATK));
 		enemy->takeDamage(ATK);
 		break;
 	case 2:
 		std::cout << name << "가 [산성 침 뱉기]를 시전했습니다!\n\n";
-		enemy->setCurrentHP(enemy->getCurrentHP() - (ATK * 0.7));
 		enemy->takeDamage(ATK * 0.7);
 		break;
 	case 3:
-		std::cout << name << "가 [고양이 잡는 쥐]를 시전했습니다.\n";
+		std::cout << name << "가 [고양이 잡는 쥐]를 시전했습니다!\n";
 		std::cout << "손톱이 날아옵니다!\n\n";
-		enemy->setCurrentHP(enemy->getCurrentHP() - (ATK * 1.7));
 		enemy->takeDamage(ATK * 1.7);
 		break;
 	case 4:
@@ -76,7 +80,7 @@ void BossMonster::attack(std::shared_ptr<Character> enemy)
 		auto player = std::dynamic_pointer_cast<Player>(enemy);
 		if (player != nullptr)
 		{
-			attackPattern4(player);
+			attackPattern4(enemy);
 		}
 		else
 		{
@@ -86,38 +90,41 @@ void BossMonster::attack(std::shared_ptr<Character> enemy)
 	}
 	case 5:
 		std::cout << name << "가 메가 [썩은 치즈]를 먹었습니다!\n";
-		setCurrentHP(getCurrentHP() + 100);
-		std::cout << name << "의 체력이 100 회복되었습니다.\n\n";
+		setCurrentHP(getCurrentHP() + 250);
+		std::cout << name << "의 체력이 250 회복되었습니다.\n\n";
 		break;
 	case 6:
 		isInvincible = true;
-		std::cout << name << "가 ??????다!\n";
+		std::cout << name << "가 [시궁창의 축복]을 사용했습니다!\n";
 		std::cout << name << "를 향한 다음 공격이 1회 무효화됩니다.\n\n";
 		// Player쪽에서 만약 isInvincible = true;면 대미지 0을 넣는 거로
 		break;
 	case 7:
-		std::cout << name << "가 ~~~~를 시전했습니다!";
-		ATK += 50; // 수치 추후 조율
-		std::cout << name << "의 공격력이 추가로 50 올랐습니다!\n\n";
+		std::cout << name << "가 [들쥐의 분노]를 시전했습니다!";
+		ATK += 10; // 수치 추후 조율
+		std::cout << name << "의 공격력이 추가로 10 올랐습니다!\n\n";
 		break;
 	default:
 		std::cout << "공격 패턴 출력 과정에서 오류 발생\n";
 		break;
 	}
+
+	std::cout << "\n[enter 키를 눌러 계속하기]";
+
+	_getch();
+	system("cls");
 }
 
-void BossMonster::attackPattern4(std::shared_ptr<Player> Player){
-	std::cout << name << "이(가) 퀴즈 공격을 시전합니다!\n\n";
-	std::cout << name << ": 너처럼 나쁜 아이는 벌을 받아야 한다 찍찍...\n";
-	std::cout << name << ": 하지만 그 전에 너를 평가하겠다 찍찍!\n";
-	std::cout << name << ": 과연 내가 내는 퀴즈를 맞출 수 있을까 찍찍~?!?!?!\n\n";
-
+void BossMonster::attackPattern4(std::shared_ptr<Character> enemy)
+{
 	int a = rand() % 15 + 1;
 	int b = rand() % 15 + 1;
 
 	int random = rand() % 4 + 1;
 
-	std::cout << "다음 퀴즈의 정답은 뭘까?";
+	std::cout << name << "가 [깜짝 퀴즈 공격]을 시전합니다!\n";
+	std::cout << "과연 내가 내는 퀴즈를 맞출 수 있을까 찍찍~?\n";
+	std::cout << "다음 퀴즈의 정답은 뭘까?\n\n";
 
 	switch (random)
 	{
@@ -149,6 +156,22 @@ void BossMonster::attackPattern4(std::shared_ptr<Player> Player){
 		correctAnswer = (a & b);
 		break;
 	}
+
+	std::cin >> playerAnswer;
+
+	if (playerAnswer != correctAnswer)
+	{
+		std::cout << name << ": 푸하하 틀렸지롱~\n";
+		std::cout << name << "가 공부하지 않은 님을 응징하고 체력을 350 회복합니다!\n";
+		enemy->takeDamage(ATK);
+		currentHP += 350;
+	}
+	else
+	{
+		std::cout << name << ": 정답을 맞추다니...!! 이거 실화냐 찍찍~~??\n\n";
+		std::cout << enemy->getName() << "은 혼란을 틈타 " << name << "를 공격했습니다.\n";
+		takeDamage(enemy->getATK());
+	}
 }
 
 void BossMonster::takeDamage(int amount)
@@ -163,23 +186,6 @@ void BossMonster::takeDamage(int amount)
 	}
 }
 
-void BossMonster::attackPattern4CheckAnswer(std::shared_ptr<Player> Player)
-{
-	if (true/*true 지우고 이거 player->getPlayerAnswer() != correctAnswer*/)
-	{
-		std::cout << name << ": 푸하하 틀렸지롱~\n";
-		std::cout << name << "가 공부하지 않은 님을 응징하고 체력을 회복합니다!\n";
-		Player->takeDamage(ATK); 
-		currentHP += ATK;
-	}
-	else
-	{
-		std::cout << name << ": 정답을 맞추다니...!! 이거 실화냐 찍찍~~??\n";
-		std::cout << Player->getName() << "은 혼란을 틈타 " << name << "를 공격했습니다.\n\n";
-		takeDamage(Player->getATK());
-	}
-}
-
 void BossMonster::printStatus()
 {
 	std::cout << "현재 " << name << "의 상태입니다\n\n";
@@ -191,7 +197,7 @@ void BossMonster::death()
 {
 	std::cout << name << "크윽... 내가 지다니...!! 찍...\n";
 	std::cout << name << "를 쓰러뜨렸습니다~!!\n\n";
-	
+
 	// 전투하면서 올랐던 공격력 수치 초기화.
 	// 만약 보스 죽이고 게임이 아예 끝난다면 이거 필요 없음.
 	ATK = 100;
