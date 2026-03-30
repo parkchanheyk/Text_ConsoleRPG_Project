@@ -17,9 +17,12 @@ void SetTextCursorLocation(uint32_t x, uint32_t y);
 static class InventoryUI
 {
 public:
+	/// <summary>
+	/// 인벤토리 UI를 화면에 출력하고 사용자 입력을 처리하는 함수
+	/// </summary>
+	/// <param name="inventory">인벤토리</param>
 	static void UpdateInventoryUITick(std::shared_ptr<Inventory> inventory)
 	{
-		
 		// Inventory UI 최초 출력 시 Index 인디케이터는 0으로 초기화
 		size_t selectedIndex = 0;
 
@@ -73,7 +76,7 @@ public:
 	}
 
 	/// <summary>
-	/// 매개변수로 받은 인벤토리를 출력하는 함수
+	/// 인벤토리를 출력하는 함수
 	/// </summary>
 	/// <param name="inventory">인벤토리</param>
 	/// <param name="selectedIndex">선택 인디케이터의 위치</param>
@@ -135,9 +138,14 @@ public:
 
 		// 하단 테두리 출력
 		SetTextCursorLocation(0, locationY);
-		std::cout << horizontalBorder;
+		std::cout << horizontalBorder << std::endl;
 
 #pragma endregion
+
+		// 입력 안내 문구 출력
+		std::cout << "[▲ / ▼ 방향키] : 커서 이동" << std::endl;
+		std::cout << "[Enter 키] : 아이템 사용" << std::endl;
+		std::cout << "[ 키] : 아이템 설명 보기" << std::endl;
 
 		// 상단에 메뉴 이름 출력
 		SetTextCursorLocation((maxLength / 2) - 5, 0);
@@ -149,5 +157,9 @@ public:
 			SetTextCursorLocation(4, selectedIndex + 2);
 			std::cout << ">";
 		}
+	}
+
+	static void ShowMenu()
+	{
 	}
 };
