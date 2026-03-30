@@ -11,34 +11,23 @@
 /// </summary>
 /// <param name="x">수평 좌표</param>
 /// <param name="y">수직 좌표</param>
-void SetTextCursorLocation(uint32_t x, uint32_t y)
-{
-	COORD pos = { (SHORT)x, (SHORT)y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-}
+void SetTextCursorLocation(uint32_t x, uint32_t y);
 
 // 인벤토리 UI를 출력하기 위한 정적 클래스
 static class InventoryUI
 {
 public:
-	static size_t selectedIndex;
-
-	// UI를 초기화하는 함수
-	static void InitializeUI()
-	{
-		selectedIndex = 0;
-	}
-
 	static void UpdateInventoryUITick(std::shared_ptr<Inventory> inventory)
 	{
+		
 		// Inventory UI 최초 출력 시 Index 인디케이터는 -1으로 초기화
-		selectedIndex = -1;
+		size_t selectedIndex = -1;
 
 		// Esc 키 입력할 때 까지 대기
 		while (true)
 		{
 			// 인벤토리 UI 출력
-			ShowItemList(inventory);
+			ShowItemList(inventory, selectedIndex);
 
 			if (_kbhit())
 			{
@@ -54,10 +43,15 @@ public:
 	}
 
 	// 매개변수로 받은 인벤토리를 출력하는 함수
-	static void ShowItemList(std::shared_ptr<Inventory> inventory)
+	static void ShowItemList(std::shared_ptr<Inventory> inventory, size_t selectedIndex)
 	{
 		std::vector<std::shared_ptr<ItemBase>> itemList;
 		itemList.reserve(inventory->container.size());
+
+		if (inventory->container.size() > 0)
+		{
+			selectedIndex = selectedIndex < 0 ? 0 : selectedIndex;
+		}
 
 		// UI 좌우 크기 조절을 위한 최대 길이 저장 변수
 		size_t maxLength = 12;	// "Inventory"의 길이를 최소값으로 설정
@@ -116,8 +110,11 @@ public:
 		std::cout << "* Inventory *";
 
 		// 아이템 선택 인디케이터 출력
-		SetTextCursorLocation(4, selectedIndex + 2);
-		std::cout << ">";
+		if (selectedIndex >= 0)
+		{
+			SetTextCursorLocation(4, selectedIndex + 2);
+			std::cout << ">";
+		}
 		
 		//// 사용자가 Esc 키 입력할 때까지 반복
 		//while (true)
