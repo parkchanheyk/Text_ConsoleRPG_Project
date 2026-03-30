@@ -54,8 +54,8 @@ std::vector<std::string> Monster::getAsciiArt() const
 // Chonkycat ¶×³ÉÀÌ
 Chonkycat::Chonkycat() : Monster("¶×³ÉÀÌ")
 {
-	this->maxHP = 1000;
-	this->currentHP = 1000;
+	this->maxHP = 100;
+	this->currentHP = 100;
 	this->ATK = 10;
 	this->speed = 10;
 	this->level = 1;

@@ -229,7 +229,8 @@ void BattleManager::BattleWithMonster(std::shared_ptr<Player> player, std::share
             if (result == EBattleResult::PlayerWin) {
                 system("cls");
                 std::cout << "\n\n   승리했습니다! " << enemy->getName() << "을(를) 물리쳤습니다!" << std::endl;
-                // 경험치랑 아이템 드랍 구현 예정
+                // 경험치랑 아이템 드랍 구현
+                player->addExp(monsterPtr->getExp());
                 Sleep(1500);
             }
             else if (result == EBattleResult::EnemyWin) {
