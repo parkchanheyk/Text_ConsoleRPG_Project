@@ -36,17 +36,30 @@ public:
 			
 			if (inputKey == 13)	// Enter
 			{
-				// 아이템 사용 및 메뉴 나가기
+				// 아이템 제거 및 메뉴 나가기
+				
+				std::shared_ptr<ItemBase> item = nullptr;
 				if (inventory->RemoveItem(nullptr, 1) == true)
 				{
+					// BattleManager에서 아이템 효과 적용 시도
 					break;
 				}
+
+				// 아이템 제거 실패 시 인벤토리 UI 화면 유지
 			}
 			if (inputKey == 27)	// ESC
 			{
 				// 메뉴 나가기
 				std::cout << "ESC 키" << std::endl;
 				break;
+			}
+			if (inputKey == 72)	// UP Key
+			{
+				--selectedIndex;
+			}
+			if (inputKey == 80)	// Down Key
+			{
+				++selectedIndex;
 			}
 
 #pragma endregion
@@ -60,24 +73,26 @@ public:
 	/// <param name="selectedIndex">선택 인디케이터의 위치</param>
 	static void ShowItemList(std::shared_ptr<Inventory> inventory, size_t selectedIndex)
 	{
-		std::vector<std::shared_ptr<ItemBase>> itemList;
-		itemList.reserve(inventory->container.size());
-
-		// 인덱스 조정
-		selectedIndex = selectedIndex < inventory->container.size() ? selectedIndex : 0;
+		// 인디케이터 인덱스 조정
+		selectedIndex %= inventory->container.size();
+		if (selectedIndex < 0)
+		{
+			selectedIndex = inventory->container.size() - selectedIndex;
+		}
 
 		// UI 좌우 크기 조절을 위한 최대 길이 저장 변수
 		size_t maxLength = 12;	// "Inventory"의 길이를 최소값으로 설정
 
+		// 아이템을 출력할 줄의 Y좌표
+		size_t locationY = 2;
+
 		for (const auto& pair : inventory->container)
 		{
-			itemList.push_back(pair.first);
-
 			// 커서 위치 이동 (앞쪽 공백 6칸 고정)
-			SetTextCursorLocation(6, itemList.size() + 2);
+			SetTextCursorLocation(2, locationY++);
 
 			// 출력할 문자열 설정
-			std::string line;
+			std::string line = "    ";
 			line.append(pair.first->itemName);	// 아이템 이름
 			line.append(" x ");		// 개수 표시를 위한 인디케이터
 			line.append(std::to_string(pair.second));	// 보유 개수
@@ -101,7 +116,7 @@ public:
 		std::cout << horizontalBorder;
 
 		// 좌우 테두리 출력
-		for (int i = 2; i < itemList.size() + 2; ++i)
+		for (int i = 2; i < locationY; ++i)
 		{
 			// 좌측 테두리 출력
 			SetTextCursorLocation(0, i);
@@ -113,7 +128,7 @@ public:
 		}
 
 		// 하단 테두리 출력
-		SetTextCursorLocation(0, itemList.size() + 2);
+		SetTextCursorLocation(0, locationY);
 		std::cout << horizontalBorder;
 
 #pragma endregion
@@ -123,38 +138,10 @@ public:
 		std::cout << "* Inventory *";
 
 		// 아이템 선택 인디케이터 출력
-		if (selectedIndex >= 0)
+		if (inventory->container.size() > 0)
 		{
 			SetTextCursorLocation(4, selectedIndex + 2);
 			std::cout << ">";
 		}
-		
-		//// 사용자가 Esc 키 입력할 때까지 반복
-		//while (true)
-		//{
-		//	if (_kbhit())
-		//	{
-		//		char inputKey = _getch();
-
-		//		if (inputKey == 72)	// UP_ARROW
-		//		{
-		//			// 아이템 선택 인덱스 조정
-
-		//			std::cout << "커서 위로 이동" << std::endl;
-		//			break;
-		//		}
-		//		if (inputKey == 80)	// DOWN_ARROW
-		//		{
-		//			// 아이템 선택 인덱스 조정
-		//			std::cout << "커서 아래로 이동" << std::endl;
-		//			break;
-		//		}
-		//		if (inputKey == 27)	// ESC
-		//		{
-		//			std::cout << "ESC 키" << std::endl;
-		//			break;
-		//		}
-		//	}
-		//}
 	}
 };
