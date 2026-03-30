@@ -62,9 +62,6 @@ public:
 	// 현재 인벤토리의 몇칸이 사용중인지 반환
 	size_t GetSize() const;
 
-	// 인벤토리에 보유중인 아이템 목록 출력
-	void PrintInventory()const;
-
 	// 인벤토리 크기
 	const size_t capacity;
 
