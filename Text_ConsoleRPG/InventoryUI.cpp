@@ -78,7 +78,7 @@ void InventoryUI::UpdateInventoryUITick(std::shared_ptr<Inventory> inventory)
 void InventoryUI::ShowItemList(std::shared_ptr<Inventory> inventory, size_t selectedIndex)
 {
 	// 인디케이터 인덱스 조정
-	selectedIndex %= inventory->container.size();
+	selectedIndex %= (inventory->container.size() > 0) ? inventory->container.size() : 1;
 	if (selectedIndex < 0)
 	{
 		selectedIndex = inventory->container.size() - selectedIndex;
