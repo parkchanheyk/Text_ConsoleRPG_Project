@@ -20,38 +20,51 @@ public:
 	static void UpdateInventoryUITick(std::shared_ptr<Inventory> inventory)
 	{
 		
-		// Inventory UI 최초 출력 시 Index 인디케이터는 -1으로 초기화
-		size_t selectedIndex = -1;
+		// Inventory UI 최초 출력 시 Index 인디케이터는 0으로 초기화
+		size_t selectedIndex = 0;
 
-		// Esc 키 입력할 때 까지 대기
+		// Inventory UI 반복 출력
 		while (true)
 		{
 			// 인벤토리 UI 출력
 			ShowItemList(inventory, selectedIndex);
 
-			if (_kbhit())
-			{
-				char inputKey = _getch();
+			// 키보드 입력 대기
+			char inputKey = _getch();
 
-				if (inputKey == 27)	// ESC
+#pragma region 입력된 키에 따른 동작
+			
+			if (inputKey == 13)	// Enter
+			{
+				// 아이템 사용 및 메뉴 나가기
+				if (inventory->RemoveItem(nullptr, 1) == true)
 				{
-					std::cout << "ESC 키" << std::endl;
 					break;
 				}
 			}
+			if (inputKey == 27)	// ESC
+			{
+				// 메뉴 나가기
+				std::cout << "ESC 키" << std::endl;
+				break;
+			}
+
+#pragma endregion
 		}
 	}
 
-	// 매개변수로 받은 인벤토리를 출력하는 함수
+	/// <summary>
+	/// 매개변수로 받은 인벤토리를 출력하는 함수
+	/// </summary>
+	/// <param name="inventory">인벤토리</param>
+	/// <param name="selectedIndex">선택 인디케이터의 위치</param>
 	static void ShowItemList(std::shared_ptr<Inventory> inventory, size_t selectedIndex)
 	{
 		std::vector<std::shared_ptr<ItemBase>> itemList;
 		itemList.reserve(inventory->container.size());
 
-		if (inventory->container.size() > 0)
-		{
-			selectedIndex = selectedIndex < 0 ? 0 : selectedIndex;
-		}
+		// 인덱스 조정
+		selectedIndex = selectedIndex < inventory->container.size() ? selectedIndex : 0;
 
 		// UI 좌우 크기 조절을 위한 최대 길이 저장 변수
 		size_t maxLength = 12;	// "Inventory"의 길이를 최소값으로 설정
