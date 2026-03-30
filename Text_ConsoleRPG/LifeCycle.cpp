@@ -34,7 +34,6 @@ LifeCycle::LifeCycle() : currentState(EGameState::Village), isRunning(true), dis
     mainPlayer = std::make_shared<Player>("나비", "고양이 기사");
 
     shop = std::make_unique<Shop>();
-    money = std::make_unique<Money>(1000);
     shopUI = std::make_unique<ShopUI>();
 
     auto scroll = std::make_shared<ExpScroll>
@@ -152,7 +151,7 @@ void LifeCycle::HandleVillage() {
     Gotoxy(infoX, infoY + 2); cout << "NAME   : " << mainPlayer->getName();
     Gotoxy(infoX, infoY + 3); cout << "LEVEL  : " << mainPlayer->getLevel();
     Gotoxy(infoX, infoY + 4); cout << "HEALTH : " << mainPlayer->getCurrentHP();
-    Gotoxy(infoX, infoY + 5); cout << "GOLD   : " << money->getCurrentMoney() << " G";
+    Gotoxy(infoX, infoY + 5); cout << "GOLD   : " << mainPlayer->GetMoney()->getCurrentMoney() << " G";
 	Gotoxy(infoX, infoY + 6); cout << "EXP    : " << mainPlayer->getExp() << " EXP";
 
 
