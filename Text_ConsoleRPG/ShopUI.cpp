@@ -173,15 +173,6 @@ std::shared_ptr<ItemBase> ShopUI::selectItem(const MapType& items, int startRow)
     return nullptr;
 }
 
-
-void ShopUI::setPlayer(std::shared_ptr <Player> player)
-{
-    if (myPlayer == nullptr)
-    {
-        myPlayer = player;
-    }
-}
-
 // ── 메인 틱 ───────────────────────────────────
 bool ShopUI::updateShopTick(Shop& shop, std::shared_ptr<Player> player)
 {
@@ -335,21 +326,21 @@ bool ShopUI::updateShopTick(Shop& shop, std::shared_ptr<Player> player)
 
                 if (action == 1)
                 {
-                    if (TransactionManager::buyItem(shop, selectedItem, myPlayer, count))
+                    if (TransactionManager::buyItem(shop, selectedItem, player, count))
                         pushLog("구매 완료: " + selectedItem->itemName + " x" + std::to_string(count));
                     else
                         pushLog("! 구매 실패");
                 }
                 else if (action == 2)
                 {
-                    if (TransactionManager::sellItem(shop, selectedItem, myPlayer, count))
+                    if (TransactionManager::sellItem(shop, selectedItem, player, count))
                         pushLog("판매 완료: " + selectedItem->itemName + " x" + std::to_string(count));
                     else
                         pushLog("! 판매 실패");
                 }
                 else if (action == 3)
                 {
-                    if (TransactionManager::buyBackItem(shop, selectedItem, myPlayer, count))
+                    if (TransactionManager::buyBackItem(shop, selectedItem, player, count))
                         pushLog("구매 완료: " + selectedItem->itemName + " x" + std::to_string(count));
                     else
                         pushLog("! 재구매 실패");
