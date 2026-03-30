@@ -8,8 +8,13 @@ Monster::Monster(std::string name) : Character(name)
 
 void Monster::attack(Character* enemy)
 {
-	std::cout << this->name << "이(가)" << enemy << "을(를) 공격했다!" << std::endl;
-	// player->setCurrentHP() = player->getCurrentHP() - this->getATK();
+	std::cout << this->name << "이(가)" << enemy->getName() << "을(를) 공격했다!" << std::endl;
+	this->takeDamage(enemy->getATK());
+}
+
+void Monster::takeDamage(int amount)
+{
+	this->setCurrentHP(this->getCurrentHP() - amount);
 }
 
 void Monster::death()
@@ -51,6 +56,12 @@ Chonkycat::Chonkycat() : Monster("뚱냥이")
 	this->exp = 10;
 	this->items = "뚱냥이의 털뭉치";
 	this->money = 100;
+	this->asciiArt = R"(
+      /\_/\
+     ( o.o )
+      > ^ <
+     (  "  )
+    )";
 }
 
 
@@ -66,6 +77,14 @@ Bulldog::Bulldog() : Monster("불독")
 	this->exp = 30;
 	this->items = "불독의 턱살";
 	this->money = 200;
+	this->asciiArt = R"(
+     / \---/ \
+    (  O   O  )
+     \   m   /  
+     |       |
+     |   _   |
+     \__/ \__/
+)";
 }
 
 
@@ -81,6 +100,13 @@ Ghost::Ghost() : Monster("고스트")
 	this->exp = 50;
 	this->items = "고스트의 영혼";
 	this->money = 500;
+	this->asciiArt = R"(
+          .--.
+         (>  <)
+         | ww |
+         \    /
+          `~~`
+    )";
 }
 
 
@@ -96,6 +122,13 @@ Golem::Golem() : Monster("골렘")
 	this->exp = 100;
 	this->items = "골렘의 돌조각";
 	this->money = 1000;
+	this->asciiArt = R"(
+     [|||||||]
+    [|[ o o ]|]
+    [|   ^   |]
+     [||___||]
+      /|   |\
+    )";
 }
 
 
@@ -116,4 +149,11 @@ LuckyMonster::LuckyMonster() : Monster("???")
 	this->exp = std::uniform_int_distribution<int>(1, 200)(generate);
 	this->items = "행운의 증표";
 	this->money = std::uniform_int_distribution<int>(1, 5000)(generate);
+	this->asciiArt = R"(
+      .-------.
+     /   $   /|
+    .-------. |
+    |  _ _  | /
+    '-------'
+)";
 }

@@ -9,7 +9,8 @@ class Monster : public Character
 {
 public:
 	Monster(std::string name);
-	virtual void attack(Character* enemy) override ; // Áö±Ý ¸ø¾¸
+	void attack(Character* enemy) override ;
+	void takeDamage(int amount) override;
 	void death() override final;
 	void printStatus() override final;
 
@@ -23,6 +24,7 @@ public:
 protected:
 	std::string items;
 	int money;
+	std::string asciiArt;
 };
 
 
