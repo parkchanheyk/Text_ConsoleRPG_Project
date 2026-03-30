@@ -10,12 +10,8 @@ class Monster : public Character
 {
 public:
 	Monster(std::string name);
-<<<<<<< Updated upstream
-	void attack(Character* enemy) override ;
+	void attack(std::shared_ptr<Character> enemy) override ;
 	void takeDamage(int amount) override;
-=======
-	virtual void attack(std::shared_ptr<Character> enemy) override ; // Áö±Ý ¸ø¾¸
->>>>>>> Stashed changes
 	void death() override final;
 	void printStatus() override final;
 

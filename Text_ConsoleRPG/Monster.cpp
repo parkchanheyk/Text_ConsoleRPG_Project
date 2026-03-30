@@ -9,16 +9,12 @@ Monster::Monster(std::string name) : Character(name)
 void Monster::attack(std::shared_ptr<Character> enemy)
 {
 	std::cout << this->name << "이(가)" << enemy->getName() << "을(를) 공격했다!" << std::endl;
-<<<<<<< Updated upstream
 	this->takeDamage(enemy->getATK());
 }
 
 void Monster::takeDamage(int amount)
 {
 	this->setCurrentHP(this->getCurrentHP() - amount);
-=======
-	// player->setCurrentHP() = player->getCurrentHP() - this->getATK();
->>>>>>> Stashed changes
 }
 
 void Monster::death()

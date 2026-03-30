@@ -60,11 +60,10 @@
     <ClCompile Include="TransactionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
     <ClCompile Include="InventoryUI.cpp">
-=======
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="BattleManager.cpp">
->>>>>>> Stashed changes
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,11 +110,10 @@
     <ClInclude Include="TransactionManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< Updated upstream
-    <ClInclude Include="InventoryUI.h">
-=======
     <ClInclude Include="BattleManager.h">
->>>>>>> Stashed changes
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

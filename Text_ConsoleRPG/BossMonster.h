@@ -20,13 +20,9 @@ public:
 	
 	void death() override;
 
-<<<<<<< Updated upstream
-	void attackPattern4(Player* player);
+	void attackPattern4(std::shared_ptr<Player> enemy);
 
-	void attackPattern4CheckAnswer(Player* player);
-=======
-	void attackPattern4(std::shared_ptr<Character> enemy);
->>>>>>> Stashed changes
+	void attackPattern4CheckAnswer(std::shared_ptr<Player> enemy);
 
 	int determinePhase(int currentHP);
 

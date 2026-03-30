@@ -2,6 +2,7 @@
 #include <string>
 
 #include "BossMonster.h"
+#include "Player.h"
 
 BossMonster::BossMonster() :Character("[초대형 울트라 찍찍 들쥐]")
 {
@@ -9,7 +10,7 @@ BossMonster::BossMonster() :Character("[초대형 울트라 찍찍 들쥐]")
 	maxHP = 10000;
 	currentHP = 10000;
 	level = 100;
-	ATK = 100;
+	ATK = 10;
 	exp = 100;
 	speed = 100;
 }
@@ -33,7 +34,7 @@ int BossMonster::determinePhase(int currentHP)
 }
 
 void BossMonster::attack(std::shared_ptr<Character> enemy)
-{	
+{
 	int pattern = 0;
 
 	isInvincible = false;
@@ -69,6 +70,20 @@ void BossMonster::attack(std::shared_ptr<Character> enemy)
 		enemy->setCurrentHP(enemy->getCurrentHP() - (ATK * 1.7));
 		enemy->takeDamage(ATK * 1.7);
 		break;
+	case 4:
+	{   // [수정] 중괄호 추가로 변수 범위 제한 (빌드 에러 해결)
+		// [수정] shared_ptr 전용 캐스팅 사용
+		auto player = std::dynamic_pointer_cast<Player>(enemy);
+		if (player != nullptr)
+		{
+			attackPattern4(player);
+		}
+		else
+		{
+			std::cout << "오류: enemy가 Player 타입이 아닙니다.\n";
+		}
+		break;
+	}
 	case 5:
 		std::cout << name << "가 메가 [썩은 치즈]를 먹었습니다!\n";
 		setCurrentHP(getCurrentHP() + 100);
@@ -88,25 +103,11 @@ void BossMonster::attack(std::shared_ptr<Character> enemy)
 	default:
 		std::cout << "공격 패턴 출력 과정에서 오류 발생\n";
 		break;
-	case 4: //얘를 맨 밑에 두지 않으면 빌드 실패함..
-		// static cast인지 dynamic cast인지, 그리고 아래 체크 필요한지 확인
-		Player * player = dynamic_cast<Player*>(enemy);
-		if (player != nullptr)
-		{
-			attackPattern4(player);
-		}
-		else
-		{
-			std::cout << "오류: enemy가 Player 타입이 아닙니다.\n";
-		}
-		attackPattern4(player);
-		break;
 	}
 }
 
-void BossMonster::attackPattern4(Player* player)
-{
-	std::cout << name << "가 퀴즈 공격을 시전합니다!\n\n";
+void BossMonster::attackPattern4(std::shared_ptr<Player> Player){
+	std::cout << name << "이(가) 퀴즈 공격을 시전합니다!\n\n";
 	std::cout << name << ": 너처럼 나쁜 아이는 벌을 받아야 한다 찍찍...\n";
 	std::cout << name << ": 하지만 그 전에 너를 평가하겠다 찍찍!\n";
 	std::cout << name << ": 과연 내가 내는 퀴즈를 맞출 수 있을까 찍찍~?!?!?!\n\n";
@@ -162,20 +163,20 @@ void BossMonster::takeDamage(int amount)
 	}
 }
 
-void BossMonster::attackPattern4CheckAnswer(Player* player)
+void BossMonster::attackPattern4CheckAnswer(std::shared_ptr<Player> Player)
 {
 	if (true/*true 지우고 이거 player->getPlayerAnswer() != correctAnswer*/)
 	{
 		std::cout << name << ": 푸하하 틀렸지롱~\n";
 		std::cout << name << "가 공부하지 않은 님을 응징하고 체력을 회복합니다!\n";
-		player->setCurrentHP(player->getCurrentHP() - (ATK));
+		Player->takeDamage(ATK); 
 		currentHP += ATK;
 	}
 	else
 	{
 		std::cout << name << ": 정답을 맞추다니...!! 이거 실화냐 찍찍~~??\n";
-		std::cout << player->getName() << "은 혼란을 틈타 " << name << "를 공격했습니다.\n\n";
-		takeDamage(player->getATK());
+		std::cout << Player->getName() << "은 혼란을 틈타 " << name << "를 공격했습니다.\n\n";
+		takeDamage(Player->getATK());
 	}
 }
 
@@ -189,45 +190,11 @@ void BossMonster::printStatus()
 void BossMonster::death()
 {
 	std::cout << name << "크윽... 내가 지다니...!! 찍...\n";
-<<<<<<< Updated upstream
 	std::cout << name << "를 쓰러뜨렸습니다~!!\n\n";
 	
 	// 전투하면서 올랐던 공격력 수치 초기화.
 	// 만약 보스 죽이고 게임이 아예 끝난다면 이거 필요 없음.
 	ATK = 100;
-=======
-	std::cout << name << "을(를) 쓰러뜨렸습니다~!!\n\n";
-}
-
-void BossMonster::attackPattern4(std::shared_ptr<Character> enemy){
-	std::cout << name << "이(가) 퀴즈 공격을 시전합니다!\n\n";
-	std::cout << name << ": 너처럼 나쁜 아이는 벌을 받아야 한다 찍찍...\n";
-	std::cout << name << ": 하지만 그 전에 너를 평가하겠다 찍찍!\n";
-	std::cout << name << ": 과연 내가 내는 퀴즈를 맞출 수 있을까 찍찍~?!?!?!\n\n";
-
-	int random = rand() % 4 + 1;
-
-	switch (random)
-	{
-	case 1:
-		// quiz #1
-		break;
-	case 2:
-		// quiz #2
-		break;
-	case 3:
-		// quiz #3
-		break;
-	case 4:
-		//quiz #4
-		break;
-	}
-}
-
-void BossMonster::heal()
-{
-	setCurrentHP(getCurrentHP()+100);
->>>>>>> Stashed changes
 }
 
 // getters

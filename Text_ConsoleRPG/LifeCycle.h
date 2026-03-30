@@ -49,12 +49,8 @@ private:
     //static const int KEY_ESC = 27;
 
     // 3. 게임 데이터 자원
-<<<<<<< Updated upstream
-    std::unique_ptr<Player> mainPlayer; // 스마트 포인터를 이용한 플레이어 관리
-    std::shared_ptr<Inventory> testInventory;   // UI 테스트 전용 인벤토리 객체
-=======
     std::shared_ptr<Player> mainPlayer; // 스마트 포인터를 이용한 플레이어 관리
->>>>>>> Stashed changes
+    std::shared_ptr<Inventory> testInventory;   // UI 테스트 전용 인벤토리 객체
     std::unique_ptr<Shop> shop; // 상점 관리
     std::unique_ptr<ShopUI> shopUI; // 상점 UI
     std::unique_ptr<Money> money;
