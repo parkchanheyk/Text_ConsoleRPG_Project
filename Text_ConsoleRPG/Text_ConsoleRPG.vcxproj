@@ -129,6 +129,7 @@
     <ClCompile Include="CreateItem.cpp" />
     <ClCompile Include="EquipItem.cpp" />
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="ItemBase.cpp" />
     <ClCompile Include="LifeCycle.cpp" />
     <ClCompile Include="main.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="CreateItem.h" />
     <ClInclude Include="EquipItem.h" />
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="ItemBase.h" />
     <ClInclude Include="LifeCycle.h" />
     <ClInclude Include="Money.h" />

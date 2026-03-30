@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <string>
 #include "ConsumeItem.h"    // ConsumeItem, HPPotionItem
+#include "InventoryUI.h"
 
 using namespace std;
 
@@ -171,13 +172,16 @@ void LifeCycle::HandleInventory() { // 플레이어의 인벤토리 정보를 받아서 아이템 
     //cout << "==========================================" << endl;
     if (testInventory != nullptr)
     {
-        testInventory->PrintInventory();
+        //testInventory->PrintInventory();
+        InventoryUI::UpdateInventoryUITick(testInventory);
     }
 
-    if (_kbhit() && _getch() == KEY_ESC) {
-        system("cls");
-        currentState = EGameState::Village;
-    }
+    //if (_kbhit() && _getch() == KEY_ESC) {
+    //    system("cls");
+    //    currentState = EGameState::Village;
+    //}
+    system("cls");
+    currentState = EGameState::Village;
 }
 
 void LifeCycle::HandleDungeon() { // 플레이어의 이동 거리를 관리하여 배경이 움직이는 효과를 구현합니다. 향후 몬스터 등장과 전투 시스템도 추가할 예정입니다.
