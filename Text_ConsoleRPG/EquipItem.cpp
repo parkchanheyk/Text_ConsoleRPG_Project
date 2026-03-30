@@ -1,11 +1,11 @@
 #include "EquipItem.h"
 
-EquipItem::EquipItem(const std::string& name, int atk, int def, int buyPrice, int sellPrice)
+EquipItem::EquipItem(const std::string& name, int atk, int HP, int buyPrice, int sellPrice)
 {
     itemType = EItemType::Equip;
     itemName = name;
     additionalAttack = atk;
-    additionalHP = def;
+    additionalHP = HP;
     buyCost = buyPrice;
     sellCost = sellPrice;
 }
