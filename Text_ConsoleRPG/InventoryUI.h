@@ -36,13 +36,20 @@ public:
 			
 			if (inputKey == 13)	// Enter
 			{
-				// 아이템 제거 및 메뉴 나가기
-				
-				std::shared_ptr<ItemBase> item = nullptr;
-				if (inventory->RemoveItem(nullptr, 1) == true)
+				// 선택한 아이템 정보 얻어오기
+				for (auto it = inventory->container.begin(); it != inventory->container.end(); ++it)
 				{
-					// BattleManager에서 아이템 효과 적용 시도
-					break;
+					if (selectedIndex == 0)
+					{
+						std::shared_ptr<ItemBase> item = (*it).first;
+						// 아이템 제거 및 메뉴 나가기
+						if (inventory->RemoveItem(item, 1) == true)
+						{
+							// BattleManager에서 아이템 효과 적용 시도
+							return;
+						}
+					}
+					--selectedIndex;
 				}
 
 				// 아이템 제거 실패 시 인벤토리 UI 화면 유지
@@ -50,8 +57,7 @@ public:
 			if (inputKey == 27)	// ESC
 			{
 				// 메뉴 나가기
-				std::cout << "ESC 키" << std::endl;
-				break;
+				return;
 			}
 			if (inputKey == 72)	// UP Key
 			{
