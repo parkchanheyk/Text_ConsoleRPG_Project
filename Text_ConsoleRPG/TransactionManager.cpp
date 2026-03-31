@@ -32,7 +32,7 @@ bool TransactionManager::sellItem(Shop& shop, std::shared_ptr<ItemBase> item,
 
     size_t earn = item->sellCost * count;
 
-    player->GetMoney()->getMoney(earn);
+    player->GetMoney()->addMoney(earn);
 
     shop.addBuyBack(item, count);
 

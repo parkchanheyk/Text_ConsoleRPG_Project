@@ -62,7 +62,7 @@ bool Player::SellItem(std::shared_ptr<ItemBase> item, size_t amount)
     }
 
     // 2. ∞·¡¶ π◊ æ∆¿Ã≈€ √ﬂ∞°
-    money->getMoney(totalCost); // µ∑ »πµÊ
+    money->addMoney(totalCost); // µ∑ »πµÊ
     inventory->RemoveItem(item, amount); // æ∆¿Ã≈€ ¡¶∞≈
     return true;
 }

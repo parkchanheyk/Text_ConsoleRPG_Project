@@ -20,7 +20,7 @@ bool Money::spendMoney(size_t moneyAmount)
 	return true;
 }
 
-bool Money::getMoney(size_t moneyAmount)
+bool Money::addMoney(size_t moneyAmount)
 {
 	currentMoney += moneyAmount;
 	if (currentMoney > maxMoney)

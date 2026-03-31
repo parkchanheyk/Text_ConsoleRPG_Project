@@ -13,7 +13,7 @@ public:
 
 	bool spendMoney(size_t moneyAmount);
 
-	bool getMoney(size_t moneyAmount);
+	bool addMoney(size_t moneyAmount);
 
 	size_t getCurrentMoney() const;
 
