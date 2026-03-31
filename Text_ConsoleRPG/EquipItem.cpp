@@ -2,14 +2,15 @@
 #include "LogMacros.h"
 #include "Player.h"
 
-EquipItem::EquipItem(const std::string& name, int atk, int HP, int buyPrice, int sellPrice)
+EquipItem::EquipItem(const std::string& name, size_t maxStack, int sellPrice, int buyPrice, int atk, int hp)
 {
     itemType = EItemType::Equip;
     itemName = name;
-    additionalAttack = atk;
-    additionalHP = HP;
-    buyCost = buyPrice;
+    maxStackCount = maxStack;
     sellCost = sellPrice;
+    buyCost = buyPrice;
+    additionalAttack = atk;
+    additionalHP = hp;
 }
 
 bool EquipItem::ApplyEffect(const std::shared_ptr<Character> character)

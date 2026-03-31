@@ -109,7 +109,7 @@ void BossMonster::attack(std::shared_ptr<Character> enemy)
 		// Player쪽에서 만약 isInvincible = true;면 대미지 0을 넣는 거로
 		break;
 	case 7:
-		std::cout << name << "가 [들쥐의 분노]를 시전했습니다!";
+		std::cout << name << "가 [들쥐의 분노]를 시전했습니다!\n";
 		ATK += 9; // 수치 추후 조율
 		std::cout << name << "의 공격력이 추가로 9 올랐습니다!\n\n";
 		break;

@@ -23,7 +23,7 @@
 static constexpr int HEADER_ROW = 0;
 static constexpr int MONEY_ROW = 1;
 static constexpr int LIST_ROW = 3;
-static constexpr int STOCK_ROWS = 10;
+static constexpr int STOCK_ROWS = 15;
 static constexpr int MENU_ROW = LIST_ROW + STOCK_ROWS + 1;
 static constexpr int INPUT_ROW = MENU_ROW + 2;
 static constexpr int LOG_START = INPUT_ROW + 2;

@@ -13,7 +13,7 @@ private:
 public:
 	EquipItem() {}
 
-	EquipItem(const std::string& name, int atk, int HP, int buyCost, int sellCost);
+	EquipItem(const std::string& name, size_t maxStack, int sellCost, int buyCost, int atk, int hp);
 
 	bool isCharacterEquipped() const {
 		return isEquipped;

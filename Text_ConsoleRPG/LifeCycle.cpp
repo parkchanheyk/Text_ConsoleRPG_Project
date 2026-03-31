@@ -36,36 +36,26 @@ LifeCycle::LifeCycle() : currentState(EGameState::Village), isRunning(true), dis
     shop = std::make_unique<Shop>();
     shopUI = std::make_unique<ShopUI>();
 
-    auto scroll = std::make_shared<ExpScroll>
-        (
-            "초급 경험치 스크롤",
-            50,
-            1
-        );
-    auto sword = std::make_shared<EquipItem>
-        (
-            "낡고 녹슨 검",
-            50,
-            50,
-            200,
-            100
-        );
+    std::vector<std::shared_ptr<ItemBase>> items = {
+        std::make_shared<ExpScroll>("초급 경험치 스크롤", 50, 1),
+        std::make_shared<ExpScroll>("중급 경험치 스크롤", 100, 1),
+        std::make_shared<ExpScroll>("고급 경험치 스크롤", 200, 1),
+        std::make_shared<HPPotionItem>("빨간 포션", 10, 1, 10),
+        std::make_shared<HPPotionItem>("주황 포션", 20, 2, 20),
+        std::make_shared<HPPotionItem>("하얀 포션", 30, 3, 30),
+        std::make_shared<EquipItem>("녹슨 검", 1, 100, 200, 4, 10),
+        std::make_shared<EquipItem>("무딘 검", 1, 200, 400, 6, 20),
+        std::make_shared<EquipItem>("날카로운 검", 1, 300, 600, 8, 40)
+    };
 
-    auto smallPotion = std::make_shared<HPPotionItem>
-        (
-            "소형 체력 포션",
-            10,
-            1,
-            50
-        );
+    for (int i = 0; i < items.size(); ++i) {
+        shop->addStock(items[i], 100);
+    }
 
-    mainPlayer->GetInventory()->AddItem(scroll, 3);
-    mainPlayer->GetInventory()->AddItem(smallPotion, 10);
-    mainPlayer->GetInventory()->AddItem(sword, 1);
 
-    shop->addStock(smallPotion, 100);
-    shop->addStock(scroll, 100);
-    shop->addStock(sword, 10);
+    mainPlayer->GetInventory()->AddItem(items[0], 101);
+    mainPlayer->GetInventory()->AddItem(items[3], 102);
+    mainPlayer->GetInventory()->AddItem(items[6], 2);
 
     // 배경 패턴 초기화 (멤버 변수 사용)
     background = ".... ^ .... _ .... * .... ^ .... _ .... * .... ^ .... _ .... * .... ^ ....";
@@ -150,9 +140,10 @@ void LifeCycle::HandleVillage() {
     Gotoxy(infoX, infoY);     cout << "* STATUS *";
     Gotoxy(infoX, infoY + 2); cout << "NAME   : " << mainPlayer->getName();
     Gotoxy(infoX, infoY + 3); cout << "LEVEL  : " << mainPlayer->getLevel();
-    Gotoxy(infoX, infoY + 4); cout << "HEALTH : " << mainPlayer->getCurrentHP();
-    Gotoxy(infoX, infoY + 5); cout << "GOLD   : " << mainPlayer->GetMoney()->getCurrentMoney() << " G";
-	Gotoxy(infoX, infoY + 6); cout << "EXP    : " << mainPlayer->getExp() << " EXP";
+    Gotoxy(infoX, infoY + 4); cout << "ATK    : " << mainPlayer->getATK();
+    Gotoxy(infoX, infoY + 5); cout << "HEALTH : " << mainPlayer->getCurrentHP() << " / " << mainPlayer->getMaxHP();
+    Gotoxy(infoX, infoY + 6); cout << "GOLD   : " << mainPlayer->GetMoney()->getCurrentMoney() << " G";
+    Gotoxy(infoX, infoY + 7); cout << "EXP    : " << mainPlayer->getExp() << " EXP";
 
 
     int menuY = infoY + 9;
