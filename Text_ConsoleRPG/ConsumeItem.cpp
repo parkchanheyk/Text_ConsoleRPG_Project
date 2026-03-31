@@ -19,7 +19,15 @@ bool HPPotionItem::ApplyEffect(const std::shared_ptr<Character> character)
 			LOG_INFO(logMsg);
 
 			// 최대 체력의 30% 회복
-			character->setCurrentHP(character->getCurrentHP() + (character->getMaxHP() * 0.3));
+			if (character->getCurrentHP() + (character->getMaxHP() * 0.3) >= character->getMaxHP())
+			{
+				character->setCurrentHP(character->getMaxHP());
+			}
+			else
+			{
+				character->setCurrentHP(character->getCurrentHP() + (character->getMaxHP() * 0.3));
+			}
+			
 
 			return true;
 		}
