@@ -29,5 +29,5 @@ private:
 	/// </summary>
 	/// <param name="inventory">인벤토리</param>
 	/// <param name="selectedIndex">선택 인디케이터의 위치</param>
-	static void ShowItemList(std::shared_ptr<Inventory> inventory, size_t selectedIndex);
+	static void ShowItemList(std::shared_ptr<Inventory> inventory, int64_t& selectedIndex);
 };

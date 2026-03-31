@@ -19,7 +19,7 @@ void SetTextCursorLocation(uint32_t x, uint32_t y)
 std::shared_ptr<ItemBase> InventoryUI::UpdateInventoryUITick(std::shared_ptr<Inventory> inventory)
 {
 	// Inventory UI 최초 출력 시 Index 인디케이터는 0으로 초기화
-	size_t selectedIndex = 0;
+	int64_t selectedIndex = 0;
 
 	// Inventory UI 반복 출력
 	while (true)
@@ -69,14 +69,10 @@ std::shared_ptr<ItemBase> InventoryUI::UpdateInventoryUITick(std::shared_ptr<Inv
 /// </summary>
 /// <param name="inventory">인벤토리</param>
 /// <param name="selectedIndex">선택 인디케이터의 위치</param>
-void InventoryUI::ShowItemList(std::shared_ptr<Inventory> inventory, size_t selectedIndex)
+void InventoryUI::ShowItemList(std::shared_ptr<Inventory> inventory, int64_t& selectedIndex)
 {
 	// 인디케이터 인덱스 조정
-	selectedIndex %= (inventory->container.size() > 0) ? inventory->container.size() : 1;
-	if (selectedIndex < 0)
-	{
-		selectedIndex = inventory->container.size() - selectedIndex;
-	}
+	selectedIndex += (selectedIndex < 0) ? inventory->container.size() : 0;
 
 	// UI 좌우 크기 조절을 위한 최대 길이 저장 변수
 	size_t maxLength = 12;	// "Inventory"의 길이를 최소값으로 설정
