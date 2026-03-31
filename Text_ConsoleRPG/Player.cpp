@@ -39,8 +39,6 @@ bool Player::BuyItem(std::shared_ptr<ItemBase> item, size_t amount)
     // 3. 결제 및 아이템 추가
     money->spendMoney(totalCost); // 돈 차감
     inventory->AddItem(item, amount); // 아이템 추가
-
-    std::cout << item->itemName << " " << amount << "개를 구매했습니다." << std::endl;
     return true;
 }
 
@@ -66,8 +64,6 @@ bool Player::SellItem(std::shared_ptr<ItemBase> item, size_t amount)
     // 2. 결제 및 아이템 추가
     money->getMoney(totalCost); // 돈 획득
     inventory->RemoveItem(item, amount); // 아이템 제거
-
-    std::cout << item->itemName << " " << amount << "개를 판매했습니다." << std::endl;
     return true;
 }
 

@@ -9,24 +9,6 @@
 bool TransactionManager::buyItem(Shop& shop, std::shared_ptr<ItemBase> item,
     std::shared_ptr<Player> player, size_t count)
 {
-    if (!item)
-    {
-        std::cout << "item null\n";
-        system("pause");
-    }
-
-    if (!player)
-    {
-        std::cout << "player null\n";
-        system("pause");
-    }
-
-    if (!player->GetInventory())
-    {
-        std::cout << "inventory null\n";
-        system("pause");
-    }
-
     if (!shop.hasStock(item, count)) return false;
 
     size_t cost = item->buyCost * count;
@@ -44,30 +26,9 @@ bool TransactionManager::buyItem(Shop& shop, std::shared_ptr<ItemBase> item,
 bool TransactionManager::sellItem(Shop& shop, std::shared_ptr<ItemBase> item,
     std::shared_ptr<Player> player, size_t count)
 {
-    if (!item)
-    {
-        std::cout << "item null\n";
-        system("pause");
-    }
-
-    if (!player)
-    {
-        std::cout << "player null\n";
-        system("pause");
-    }
-
-    if (!player->GetInventory())
-    {
-        std::cout << "inventory null\n";
-        system("pause");
-    }
-
     if (!player->GetInventory()->RemoveItem(item, count)) {
-        std::cout << "인벤토리 제거 실패\n";
         return false;
     }
-
-    std::cout << "인벤토리 제거 성공\n";
 
     size_t earn = item->sellCost * count;
 
@@ -75,32 +36,12 @@ bool TransactionManager::sellItem(Shop& shop, std::shared_ptr<ItemBase> item,
 
     shop.addBuyBack(item, count);
 
-    std::cout << "buyback 추가됨\n";
-
     return true;
 }
 
 bool TransactionManager::buyBackItem(Shop& shop, std::shared_ptr<ItemBase> item,
     std::shared_ptr<Player> player, size_t count)
 {
-    if (!item)
-    {
-        std::cout << "item null\n";
-        system("pause");
-    }
-
-    if (!player)
-    {
-        std::cout << "player null\n";
-        system("pause");
-    }
-
-    if (!player->GetInventory())
-    {
-        std::cout << "inventory null\n";
-        system("pause");
-
-    }
     if (!shop.hasBuyBack(item, count)) return false;
 
     size_t cost = item->buyCost * count;

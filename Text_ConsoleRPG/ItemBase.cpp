@@ -1,7 +1,7 @@
 #include "ItemBase.h"
 #include <iostream>	// std::cout, std::endl
 
-void ItemBase::UseItem()
+void ItemBase::DynamicMethod()
 {
-	std::cout << "아이템(" << itemName << ")을 사용" << std::endl;
+	std::cout << "아이템(" << itemName << ") " << std::endl;
 }

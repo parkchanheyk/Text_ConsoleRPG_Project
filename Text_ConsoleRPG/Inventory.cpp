@@ -2,11 +2,12 @@
 #include <Windows.h>	// COORD, SetConsoleCursorPosition
 #include <iostream>	// std::cout, std::endl
 #include <conio.h>
+#include "LogMacros.h"
 
 // 생성자 (인벤토리 사이즈 제한 설정)
 Inventory::Inventory(size_t inventoryCapacity) : capacity(inventoryCapacity)
 {
-	std::cout << inventoryCapacity << "칸 짜리 인벤토리 생성됨" << std::endl;
+	LOG_INFO(std::to_string(inventoryCapacity) + "칸 짜리 인벤토리 생성됨");
 }
 
 /// <summary>
@@ -32,12 +33,25 @@ bool Inventory::AddItem(std::shared_ptr<ItemBase> item, size_t amount)
 		// 인벤토리 내용 수정
 		container[item] += amount;
 
-		std::cout << "#LogTemp - Inventory : Success to Add Item(" << item->itemName << ") x " << amount << std::endl;
+		// 로그 출력
+		std::string logMsg = "#Inventory : Success to Add Item(";
+		logMsg.append(item->itemName);
+		logMsg.append(") x ");
+		logMsg.append(std::to_string(amount));
+		LOG_INFO(logMsg);
+
 		return true;
 	}
 
 	// 인벤토리 수정 없이 함수 종료
-	std::cout << "#LogTemp - Inventory : Failed to Add Item(" << item->itemName << ") x " << amount << std::endl;
+	
+	// 로그 출력
+	std::string logMsg = "#Inventory : Failed to Add Item(";
+	logMsg.append(item->itemName);
+	logMsg.append(") x ");
+	logMsg.append(std::to_string(amount));
+	LOG_INFO(logMsg);
+
 	return false;
 }
 
@@ -59,7 +73,14 @@ bool Inventory::RemoveItem(std::shared_ptr<ItemBase> item, size_t amount)
 	if (amount > container[item])
 	{
 		// 인벤토리 수정 없이 false 반환
-		std::cout << "#LogTemp - Inventory : Failed to Remove Item(" << item->itemName << ") x " << amount << std::endl;
+		
+		// 로그 출력
+		std::string logMsg = "#Inventory : Failed to Remove Item(";
+		logMsg.append(item->itemName);
+		logMsg.append(") x ");
+		logMsg.append(std::to_string(amount));
+		LOG_INFO(logMsg);
+
 		return false;
 	}
 
@@ -72,7 +93,13 @@ bool Inventory::RemoveItem(std::shared_ptr<ItemBase> item, size_t amount)
 		container.erase(item);
 	}
 
-	std::cout << "#LogTemp - Inventory : Success to Remove Item(" << item->itemName << ") x " << amount << std::endl;
+	// 로그 출력
+	std::string logMsg = "#Inventory : Success to Remove Item(";
+	logMsg.append(item->itemName);
+	logMsg.append(") x ");
+	logMsg.append(std::to_string(amount));
+	LOG_INFO(logMsg);
+
 	return true;
 }
 

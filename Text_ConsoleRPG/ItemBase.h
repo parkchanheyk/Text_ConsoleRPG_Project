@@ -32,6 +32,8 @@ public:
 	// 상점에서 아이템을 구매했을 때 소비되는 금액
 	size_t buyCost;
 
-	virtual void UseItem();
+private:
+	// dynamic_cast를 활용하기 위한 가상함수
+	virtual void DynamicMethod();
 };
 

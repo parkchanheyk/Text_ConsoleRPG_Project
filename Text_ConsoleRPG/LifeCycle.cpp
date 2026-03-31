@@ -198,24 +198,29 @@ void LifeCycle::HandleShop()
 
 void LifeCycle::HandleInventory() { // 플레이어의 인벤토리 정보를 받아서 아이템 목록을 보여주는 기능을 구현할 예정입니다.
     Gotoxy(0, 0);
-    //cout << "==========================================" << endl;
-    //cout << "                [ 인벤토리 ]               " << endl;
-    //cout << "==========================================" << endl;
-    //cout << "  (아이템 목록 준비 중...)" << endl << endl;
-    //cout << "  [ESC] 마을로 돌아가기" << endl;
-    //cout << "==========================================" << endl;
 
     // 플레이어의 인벤토리에 대하여 null값 확인
     if (mainPlayer->GetInventory() != nullptr)
     {
         // 플레이어 인벤토리의 UI 출력
-        InventoryUI::UpdateInventoryUITick(mainPlayer->GetInventory());
+        std::shared_ptr<ItemBase> selectedItem = InventoryUI::UpdateInventoryUITick(mainPlayer->GetInventory());
+
+        // 선택된 아이템 nullptr 검사
+        if (selectedItem != nullptr)
+        {
+            // 선택한 아이템이 사용 가능한 타입인지 확인
+            if (std::shared_ptr<IApplicablePattern> usableItem = dynamic_pointer_cast<IApplicablePattern>(selectedItem))
+            {
+                // 인벤토리에서 해당 아이템 1개 제거
+                if (mainPlayer->GetInventory()->RemoveItem(selectedItem) == true)
+                {
+                    // 효과 적용
+                    usableItem->ApplyEffect(this->mainPlayer);
+                }
+            }
+        }
     }
 
-    //if (_kbhit() && _getch() == KEY_ESC) {
-    //    system("cls");
-    //    currentState = EGameState::Village;
-    //}
     system("cls");
     currentState = EGameState::Village;
 }
