@@ -12,11 +12,6 @@ EquipItem::EquipItem(const std::string& name, int atk, int HP, int buyPrice, int
     sellCost = sellPrice;
 }
 
-EquipItem::~EquipItem()
-{
-    std::cout << "EquipItem ¼Ò¸ê»ç È£ÃâµÊ" << std::endl;
-}
-
 bool EquipItem::ApplyEffect(const std::shared_ptr<Character> character)
 {
     if (isEquipped)
@@ -36,8 +31,7 @@ bool EquipItem::ApplyEffect(const std::shared_ptr<Character> character)
             player->setMaxHP(player->getMaxHP() + additionalHP);
             isEquipped = true;
 
-            std::shared_ptr<ItemBase> ptrThis(this);
-            player->SetEquipItem(ptrThis);
+            player->SetEquipItem(shared_from_this());
             return true;
         }
     }

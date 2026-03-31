@@ -21,11 +21,6 @@ Player::Player(std::string name, std::string job) : Character(name)
     money = std::make_shared<Money>(1000);
 }
 
-Player::~Player()
-{
-    std::cout << "Player 소멸자 호출 완료" << std::endl;
-}
-
 bool Player::BuyItem(std::shared_ptr<ItemBase> item, size_t amount)
 {
     size_t totalCost = item->buyCost * amount;
@@ -162,8 +157,7 @@ void Player::SetEquipItem(std::shared_ptr<ItemBase> equipItem)
         if (auto equipment = std::dynamic_pointer_cast<EquipItem>(this->equipItem))
         {
             // 장착중인 아이템의 효과를 제거
-            std::shared_ptr<Character> ptrThis(this);
-            equipment->RevertEffect(ptrThis);
+            equipment->RevertEffect(this->shared_from_this());
         }
     }
     

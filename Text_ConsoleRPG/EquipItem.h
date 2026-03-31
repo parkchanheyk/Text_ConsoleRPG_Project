@@ -15,8 +15,6 @@ public:
 
 	EquipItem(const std::string& name, int atk, int HP, int buyCost, int sellCost);
 
-	virtual ~EquipItem();
-
 	bool isCharacterEquipped() const {
 		return isEquipped;
 	}

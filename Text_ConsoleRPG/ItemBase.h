@@ -28,7 +28,7 @@ public:
 	virtual bool RevertEffect(const std::shared_ptr<Character> character) = 0;
 };
 
-class ItemBase
+class ItemBase : public std::enable_shared_from_this<ItemBase>
 {
 public:
 	ItemBase() {}

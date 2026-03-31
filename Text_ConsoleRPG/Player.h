@@ -9,7 +9,7 @@ class Player : public Character
 public:
     // 부모 생성자를 호출해야 합니다.
     Player(std::string name, std::string job);
-    virtual ~Player();
+    virtual ~Player() = default;
 
     // 순수 가상 함수였던 attack을 반드시 구현해야 합니다. (override 키워드 권장)
     virtual void attack(std::shared_ptr<Character> enemy) override;
