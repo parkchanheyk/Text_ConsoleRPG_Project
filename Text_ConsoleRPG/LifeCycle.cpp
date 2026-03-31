@@ -327,13 +327,28 @@ void LifeCycle::HandleDungeon() { // 플레이어의 이동 거리를 관리하여 배경이 움직
             cout << "\n\n\n          " << currentMonster->getName() << "와(과) 전투 시작!" << endl;
             Sleep(1000);
 
-            // 현재 마주친 몬스터 정보를 전달(추후 BattleManager에서 구현)
-            BattleManager::BattleWithMonster(mainPlayer, currentMonster);
+            // BattleWithMonster에서 전투를 한 후 결과를 battleResult에 가져옴
+            bool battleResult = BattleManager::BattleWithMonster(mainPlayer, currentMonster);
             system("cls");
-            // 전투 후 map에서 삭제
-            dungeonMonsters.erase(spawnPoint);
-            // 끝나면 몬스터 없애기
-            defeatedPoints.insert(spawnPoint);
+            if (battleResult)   // 승리 혹은 도망
+            {
+                // 승리 후 map에서 삭제
+                dungeonMonsters.erase(spawnPoint);
+                // 죽은 몬스터 없애기
+                defeatedPoints.insert(spawnPoint);
+            }
+            else                // 패배
+            {
+                // 패배하면  이동한 거리 리셋
+                distance = 0;
+                // 패배하면 던전 몬스터도 지우기
+                dungeonMonsters.clear();
+                // 패배하면 defeatedPoints 지우기
+                defeatedPoints.clear();
+                // 패배하면 마을로 추방
+                currentState = EGameState::Village;
+            }
+            
             currentMonster = nullptr;
             battleTimer = 0.0f;
             return;

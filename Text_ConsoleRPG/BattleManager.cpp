@@ -184,7 +184,7 @@ BattleManager::EBattleResult BattleManager::ProcessTurn(std::shared_ptr<Player> 
 	return EBattleResult::Progress; // 전투 계속
 }
 
-void BattleManager::BattleWithMonster(std::shared_ptr<Player> player, std::shared_ptr<Character> enemy)
+bool BattleManager::BattleWithMonster(std::shared_ptr<Player> player, std::shared_ptr<Character> enemy)
 {
     EBattleResult result = EBattleResult::Progress;
     system("cls");
@@ -227,22 +227,25 @@ void BattleManager::BattleWithMonster(std::shared_ptr<Player> player, std::share
 
             // 결과
             if (result == EBattleResult::PlayerWin) {
-                /*system("cls");*/
                 std::cout << "\n\n승리했습니다! " << enemy->getName() << "을(를) 물리쳤습니다!" << std::endl;
                 // 경험치랑 아이템 드랍 구현
                 player->addMoney(monsterPtr->getMoney());
                 player->addExp(monsterPtr->getExp());
                 Sleep(1500);
+                return true;
             }
             else if (result == EBattleResult::EnemyWin) {
                 system("cls");
                 std::cout << "\n\n   You Died..." << std::endl;
+                player->setCurrentHP(player->getMaxHP());
                 Sleep(2000);
+                return false;
             }
             else if (result == EBattleResult::Escape) {
                 system("cls");
                 std::cout << "\n\n   쫄?  " << std::endl;
                 Sleep(1000);
+                return true;
             }
         }
         Sleep(30);
