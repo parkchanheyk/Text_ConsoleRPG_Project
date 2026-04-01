@@ -34,7 +34,7 @@
 
 ## 📂 프로젝트 구조
 # Project Directory Structure
-
+```
 ├── 📂 Core (Game Control)
 │   ├── main.cpp              # 프로그램 진입점 [cite: 7]
 │   ├── LifeCycle             # 게임 상태 및 흐름 관리 
@@ -62,7 +62,7 @@
 └── 📂 UI (View)
     ├── InventoryUI           # 인벤토리 화면 렌더링 
     └── ShopUI                # 상점 화면 렌더링
-
+```
 ---
 
 ## 🛠 기술 스택
