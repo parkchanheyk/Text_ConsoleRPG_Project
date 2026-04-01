@@ -1,4 +1,4 @@
-# ⚔️ [프로젝트 이름: (미정)]
+# ⚔️ [프로젝트 이름: (TextConsoleRPG)]
 
 > **Visual Studio 2022와 C++로 구현된 정통 텍스트 RPG** > 객체 지향 프로그래밍(OOP)을 활용하여 설계된 탄탄한 로직의 콘솔 모험기입니다.
 
@@ -10,7 +10,7 @@
 ## 🌟 주요 특징
 * **C++ OOP 설계:** `Character`, `Monster`, `Item`, `Inventory` 등의 클래스 구조를 통한 효율적인 데이터 관리.
 * **확장성:** 상속과 다형성을 활용하여 새로운 직업이나 몬스터를 쉽게 추가할 수 있는 구조.
-* **정통 텍스트 감성:** 화려한 그래픽 대신 텍스트 중심의 몰입감 있는 게임 플레이 제공.
+* **텍스트 감성:** 화려한 그래픽 대신 텍스트 중심의 몰입감 있는 게임 플레이 제공.
 
 ---
 
@@ -33,24 +33,35 @@
 ---
 
 ## 📂 프로젝트 구조
-C++ 프로젝트 특성에 맞춘 권장 구조입니다.
+# Project Directory Structure
 
-```plaintext
-├── ProjectName/
-│   ├── Headers/            # .h 헤더 파일 (클래스 선언)
-│   │   ├── Character.h
-│   │   ├── Monster.h
-│   │   ├── Inventory.h
-│   │   └── GameManager.h
-│   ├── Sources/            # .cpp 소스 파일 (로직 구현)
-│   │   ├── Character.cpp
-│   │   ├── Monster.cpp
-│   │   ├── Inventory.cpp
-│   │   └── Main.cpp        # 진입점
-│   └── Data/               # 세이브 파일 및 게임 데이터 (.txt / .dat)
-├── ProjectName.sln         # Visual Studio 솔루션 파일
-└── README.md
-```
+├── 📂 Core (Game Control)
+│   ├── main.cpp              # 프로그램 진입점 [cite: 7]
+│   ├── LifeCycle             # 게임 상태 및 흐름 관리 
+│   ├── BattleManager         # 전투 로직 컨트롤러 
+│   ├── LogManager            # 시스템 로그 관리 
+│   └── LogMacros.h           # 로그 출력 매크로 [cite: 8]
+│
+├── 📂 Entity (Objects)
+│   ├── Character             # 최상위 캐릭터 기본 클래스 
+│   ├── Player                # 플레이어 캐릭터 클래스 
+│   ├── Monster               # 일반 몬스터 클래스 
+│   ├── BossMonster           # 보스 몬스터 클래스 
+│   └── Item (Sub-Directory)
+│       ├── ItemBase          # 아이템 기본 인터페이스 
+│       ├── ConsumeItem       # 소모성 아이템 
+│       ├── EquipItem         # 장착용 아이템 
+│       └── CreateItem        # 아이템 생성 팩토리 
+│
+├── 📂 System (Logic)
+│   ├── Inventory             # 아이템 보관 및 수량 관리 
+│   ├── Shop                  # 상점 물품 및 판매 데이터 
+│   ├── Money                 # 재화 시스템 
+│   └── TransactionManager    # 거래 처리 매니저 
+│
+└── 📂 UI (View)
+    ├── InventoryUI           # 인벤토리 화면 렌더링 
+    └── ShopUI                # 상점 화면 렌더링
 
 ---
 
